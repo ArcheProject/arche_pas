@@ -228,10 +228,13 @@ class PASProvider(object):
         self.logger.debug("Got registration case util: %s", reg_case.name)
         #Really returned?
         email = self.get_email(data)
+        user = None
         if email:
             user = self.request.root['users'].get_user_by_email(email, only_validated=False)
-        else:
-            user = None
+            # There might be an ongoing registration with the same email
+            rtokens = IRegistrationTokens(context)
+            if email in rtokens:
+                del rtokens[email]
         return reg_case.callback(self, user, data)
 
     def login(self, user, first_login = False, came_from = None):
