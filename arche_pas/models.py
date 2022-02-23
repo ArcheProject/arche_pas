@@ -6,6 +6,7 @@ from UserDict import IterableUserDict
 from BTrees.OOBTree import OOBTree
 from arche.events import ObjectUpdatedEvent
 from arche.events import WillLoginEvent
+from arche.interfaces import IRegistrationTokens
 from arche.interfaces import IUser
 from pyramid.httpexceptions import HTTPFound
 from pyramid.interfaces import IRequest
