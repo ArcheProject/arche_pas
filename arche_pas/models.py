@@ -233,7 +233,7 @@ class PASProvider(object):
         if email:
             user = self.request.root['users'].get_user_by_email(email, only_validated=False)
             # There might be an ongoing registration with the same email
-            rtokens = IRegistrationTokens(context)
+            rtokens = IRegistrationTokens(self.request.root)
             if email in rtokens:
                 del rtokens[email]
         return reg_case.callback(self, user, data)
