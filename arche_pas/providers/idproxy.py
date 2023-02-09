@@ -10,7 +10,7 @@ class IDProxy(PASProvider):
     id_key = 'identity_id'
     paster_config_ns = __name__
     default_settings = {
-        "scope":["email"],
+        "scope":["identity","email"],
     }
     trust_email = True
 
@@ -36,7 +36,10 @@ class IDProxy(PASProvider):
             client_secret=self.settings['client_secret'],
         )
         profile_response = auth_session.get(self.settings['profile_uri'])
-        return profile_response.json()
+        if profile_response.ok:
+            return profile_response.json()
+        raise profile_response.raise_for_status()
+
 
     def get_email(self, response, validated=False):
         user_data = response.get("user_data", None)
