@@ -25,6 +25,9 @@ class IDProxy(PASProvider):
         )
         return authorization_url
 
+    def begin_url(self):
+        return self.settings['pre_auth_uri']
+
     def callback(self):
         auth_session = OAuth2Session(
             client_id=self.settings['client_id'],
